@@ -182,8 +182,12 @@ module.exports = {
       await answer('Ate_Mia', 3, 0, '14:07:30');
       await answer('Ate_Mia', 4, 2, '14:08:40');
       // Bookworm: two correct answers, then escapes in the Easy vault
-      await answer('Bookworm', 1, 2, '14:06:40');
-      await answer('Bookworm', 2, 0, '14:07:10');
+      // Bookworm: completes all five questions, then escapes in the Easy vault
+      await answer('Bookworm', 1, 2, '14:06:40'); // correct
+      await answer('Bookworm', 2, 0, '14:07:10'); // correct
+      await answer('Bookworm', 3, 0, '14:07:40'); // correct
+      await answer('Bookworm', 4, 2, '14:08:10'); // correct
+      await answer('Bookworm', 5, 0, '14:08:40'); // correct
       // Bert: one correct answer, then wrong answers until busted
       await answer('Bert', 1, 2, '14:06:15');
       await answer('Bert', 2, 1, '14:06:45');
