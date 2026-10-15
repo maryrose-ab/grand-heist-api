@@ -1,4 +1,4 @@
-# [Your Game Title] API
+# Grand Heist API
 
 Backend API for Grand Heist a tournament game for the SorSU Bulan Campus library.
 CS 313 Software Engineering 1, A.Y. 2026-2027.
