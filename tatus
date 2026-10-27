@@ -1,0 +1,61 @@
+[1mdiff --git a/src/repositories/results.repository.js b/src/repositories/results.repository.js[m
+[1mindex fd0bd48..162b387 100644[m
+[1m--- a/src/repositories/results.repository.js[m
+[1m+++ b/src/repositories/results.repository.js[m
+[36m@@ -26,18 +26,52 @@[m
+ //    WHERE s.status = 'CLOSED'[m
+ //      AND (CAST(:since AS timestamptz) IS NULL OR s.ended_at > :since)[m
+ //    ORDER BY s.ended_at, p.score DESC[m
+[32m+[m
+[32m+[m[32m'use strict';[m
+[32m+[m
+ const { QueryTypes } = require('sequelize');[m
+ const { sequelize } = require('../models');[m
+ [m
+ async function findFinishedGamePlayers(since) {[m
+   const sql = `[m
+[31m-    SELECT NULL AS session_code[m
+[31m-     WHERE FALSE[m
+[31m-  `; // <- replace this placeholder with your query[m
+[32m+[m[32m    SELECT[m
+[32m+[m[32m      s.join_code AS session_code,[m
+[32m+[m[32m      s.started_at,[m
+[32m+[m[32m      s.ended_at,[m
+[32m+[m[32m      u.school_id,[m
+[32m+[m[32m      p.nickname,[m
+[32m+[m[32m      p.final_score AS score,[m
+[32m+[m[32m      ([m
+[32m+[m[32m        SELECT COUNT(DISTINCT a.question_id)[m
+[32m+[m[32m        FROM answers a[m
+[32m+[m[32m        JOIN questions answered_q[m
+[32m+[m[32m          ON answered_q.question_id = a.question_id[m
+[32m+[m[32m        WHERE a.player_id = p.player_id[m
+[32m+[m[32m          AND answered_q.set_id = s.set_id[m
+[32m+[m[32m      ) = ([m
+[32m+[m[32m        SELECT COUNT(*)[m
+[32m+[m[32m        FROM questions q[m
+[32m+[m[32m        WHERE q.set_id = s.set_id[m
+[32m+[m[32m      ) AS completed[m
+[32m+[m[32m    FROM sessions s[m
+[32m+[m[32m    JOIN players p[m
+[32m+[m[32m      ON p.session_id = s.session_id[m
+[32m+[m[32m    JOIN users u[m
+[32m+[m[32m      ON u.user_id = p.user_id[m
+[32m+[m[32m    WHERE s.status = 'ended'[m
+[32m+[m[32m      AND s.ended_at IS NOT NULL[m
+[32m+[m[32m      AND ([m
+[32m+[m[32m        CAST(:since AS timestamptz) IS NULL[m
+[32m+[m[32m        OR s.ended_at > CAST(:since AS timestamptz)[m
+[32m+[m[32m      )[m
+[32m+[m[32m    ORDER BY s.ended_at, p.final_score DESC;[m
+[32m+[m[32m  `;[m
+ [m
+   return sequelize.query(sql, {[m
+     type: QueryTypes.SELECT,[m
+[31m-    replacements: { since: since ? since.toISOString() : null },[m
+[32m+[m[32m    replacements: {[m
+[32m+[m[32m      since: since ? since.toISOString() : null,[m
+[32m+[m[32m    },[m
+   });[m
+ }[m
+ [m
