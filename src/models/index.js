@@ -11,6 +11,13 @@ const sequelize = new Sequelize(
   dbConfig
 );
 
+const User = require('./user')(sequelize, DataTypes);          // from the kit
+const QuestionSet = require('./question-set')(sequelize, DataTypes);
+const GameSession = require('./game-session')(sequelize, DataTypes);
+
+QuestionSet.hasMany(GameSession, { foreignKey: 'set_id' });
+GameSession.belongsTo(QuestionSet, { foreignKey: 'set_id', as: 'questionSet' });
+
 // Week 11: load your models here, one line each, then add their associations.
 // Example:
 //   const User = require('./user')(sequelize, DataTypes);
@@ -18,4 +25,4 @@ const sequelize = new Sequelize(
 //   User.hasMany(Player, { foreignKey: 'user_id' });
 //   Player.belongsTo(User, { foreignKey: 'user_id' });
 
-module.exports = { sequelize, Sequelize, DataTypes };
+module.exports = { sequelize, Sequelize, DataTypes, User, QuestionSet, GameSession };

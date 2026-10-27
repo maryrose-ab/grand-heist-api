@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) =>
     {
       user_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       school_id: { type: DataTypes.STRING(20), allowNull: false, unique: true },
-      full_name: { type: DataTypes.STRING(100), allowNull: false },
-      email: { type: DataTypes.STRING(255), allowNull: false, unique: true },
-      role: { type: DataTypes.STRING(20), allowNull: false, defaultValue: 'PLAYER' },
+      username: { type: DataTypes.STRING(30), allowNull: false, unique: true },
+      email: { type: DataTypes.STRING(120), allowNull: false, unique: true },
+      role: { type: DataTypes.STRING(10), allowNull: false, defaultValue: 'player' },
     },
-    { tableName: 'users', timestamps: true, createdAt: 'created_at', updatedAt: false }
+    { tableName: 'users', timestamps: false }
   );
