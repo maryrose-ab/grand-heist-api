@@ -76,3 +76,14 @@ Base URL: `http://localhost:3001/api/v1`
 | npm run db:check | Counts the rows in every table |
 | npm run db:reset | Empties the database, rebuilds every table and reloads the seed data |
 | npm run check | Runs the same automatic check that GitHub runs after every push |
+
+## Sessions (Week 11)
+
+| Method | URL | Who may call | Success |
+|---|---|---|---|
+| POST | /api/v1/sessions | host, admin (owner of the set) | 201 |
+| GET | /api/v1/sessions/{code} | anyone | 200 |
+| PATCH | /api/v1/sessions/{code} | host, admin (owner of the set) | 200 |
+
+Status flow: waiting -> playing -> ended. An ended game cannot change.
+Headers: X-Demo-User (temporary, until Week 12).
