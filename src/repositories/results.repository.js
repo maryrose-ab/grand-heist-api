@@ -42,16 +42,19 @@ async function findFinishedGamePlayers(since) {
       p.nickname,
       p.final_score AS score,
       (
-        SELECT COUNT(DISTINCT a.question_id)
-        FROM answers a
-        JOIN questions answered_q
-          ON answered_q.question_id = a.question_id
-        WHERE a.player_id = p.player_id
-          AND answered_q.set_id = s.set_id
-      ) = (
-        SELECT COUNT(*)
-        FROM questions q
-        WHERE q.set_id = s.set_id
+        (SELECT COUNT(*) FROM questions q WHERE q.set_id = s.set_id) > 0
+        AND (
+          SELECT COUNT(DISTINCT a.question_id)
+          FROM answers a
+          JOIN questions answered_q
+            ON answered_q.question_id = a.question_id
+          WHERE a.player_id = p.player_id
+            AND answered_q.set_id = s.set_id
+        ) = (
+          SELECT COUNT(*)
+          FROM questions q
+          WHERE q.set_id = s.set_id
+        )
       ) AS completed
     FROM sessions s
     JOIN players p
