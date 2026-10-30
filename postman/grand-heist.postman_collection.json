@@ -400,6 +400,73 @@
           "response": []
         },
         {
+          "name": "Change status - same status",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 409\", function () {\r\n  pm.response.to.have.status(409);\r\n});\r\npm.test(\"error code is INVALID_STATUS_CHANGE\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"INVALID_STATUS_CHANGE\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"playing\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "End game 1",
           "event": [
             {
@@ -443,6 +510,73 @@
             "body": {
               "mode": "raw",
               "raw": "{ \"status\": \"ended\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change status - ended game cannot change",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 409\", function () {\r\n  pm.response.to.have.status(409);\r\n});\r\npm.test(\"error code is SESSION_ENDED\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"SESSION_ENDED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"playing\" }",
               "options": {
                 "raw": {
                   "language": "json"
