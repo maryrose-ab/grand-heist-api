@@ -21,7 +21,6 @@ This is my own build of my group's game concept. Every commit in this repository
 
 ```
 git clone https://github.com/maryrose-ab/grand-heist-api.git
-cd %USERPROFILE%\Documents
 cd grand-heist-api
 npm install
 ```
@@ -104,25 +103,36 @@ In the order of the migrations:
 
 ## Sessions (Week 11)
 
-| Method | URL | Who may call | Success |
-|---|---|---|---|
-| POST | /api/v1/sessions | host, admin (owner of the set) | 201 |
-| GET | /api/v1/sessions/{code} | anyone | 200 |
-| PATCH | /api/v1/sessions/{code} | host, admin (owner of the set) | 200 |
+## Sessions (Week 11)
 
-Status flow: waiting -> playing -> ended. An ended game cannot change.
+| Method | URL | Who may call | Success | Can fail with |
+|---|---|---|---|---|
+| POST | /api/v1/sessions | host (owner of the set) | 201 | 400, 401, 403, 404 |
+| GET | /api/v1/sessions/{code} | anyone | 200 | 400, 404 |
+| PATCH | /api/v1/sessions/{code} | host (owner of the set) | 200 | 400, 401, 403, 404, 409 |
+
+Status flow: waiting -> playing -> ended. An ended game cannot change
+(409 `SESSION_ENDED`). Any other step not in the flow is refused with
+409 `INVALID_STATUS_CHANGE`. The server makes the six-digit join code.
 Headers: X-Demo-User (temporary, until Week 12).
 
 ## Players (Week 11)
 
-| Method | URL | Who may call | Success |
-|---|---|---|---|
-| POST | /api/v1/sessions/{code}/players | any logged-in user | 201 new seat / 200 rejoin |
-| GET | /api/v1/sessions/{code}/players | anyone | 200 |
+## Players (Week 11)
 
-Joining checks, in order: session exists, rejoin (same seat), one running game at a time,
-lobby only, room left (fixed limit of 50), nickname free (database constraint).
+| Method | URL | Who may call | Success | Can fail with |
+|---|---|---|---|---|
+| POST | /api/v1/sessions/{code}/players | any known account | 201 new seat / 200 rejoin | 400, 401, 404, 409 |
+| GET | /api/v1/sessions/{code}/players | anyone | 200 | 400, 404 |
 
+Joining checks, in order: known account, nickname well formed, session exists,
+rejoin (same seat, same score, 200), one running game at a time (409 `ALREADY_IN_GAME`),
+waiting only (409 `SESSION_NOT_JOINABLE` or `SESSION_ENDED`), room left
+(fixed limit of 50, 409 `SESSION_FULL`), nickname free (database constraint,
+409 `NICKNAME_TAKEN`).
+
+The full-game rule is in the code, but no Postman request covers it: the limit of 50
+would need 50 accounts, and the seed data has 7.
 
 ## Question sets (Week 11)
 
@@ -148,4 +158,7 @@ Title: 3 to 80 characters. A set used in a game cannot be deleted (409 `QUESTION
 
 ## Testing
 
-`npm run db:reset`, import `postman/<your file>.json`, then Run collection. Then `npm run check`.
+1. `npm run db:reset`
+2. Import `postman/grand-heist.postman_collection.json` into Postman.
+3. Run the collection. Every request should pass.
+4. `npm run check`
