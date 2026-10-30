@@ -1,0 +1,2943 @@
+{
+  "info": {
+    "_postman_id": "16519c6d-b21e-4a38-baa6-7ba095003602",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59235347",
+    "_collection_link": "https://go.postman.co/collection/59235347-16519c6d-b21e-4a38-baa6-7ba095003602?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "session",
+      "item": [
+        {
+          "name": "Create Session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "   pm.test(\"status is 201\", function () {\r\n     pm.response.to.have.status(201);\r\n   });\r\n   pm.collectionVariables.set(\"code\", pm.response.json().code);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"set_id\": 1 }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});\r\npm.test(\"new seat, rejoined is false\", function () {\r\n  pm.expect(pm.response.json().rejoined).to.eql(false);\r\n});\r\npm.collectionVariables.set(\"playerId\", pm.response.json().player_id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"Rina\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rejoin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"same seat, rejoined is true\", function () {\r\n  const body = pm.response.json();\r\n  pm.expect(body.rejoined).to.eql(true);\r\n  pm.expect(body.player_id).to.eql(Number(pm.collectionVariables.get(\"playerId\")));\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"Rina\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List players",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"the list has at least one player\", function () {\r\n  pm.expect(pm.response.json().length).to.be.above(0);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"status is playing\", function () {\r\n  pm.expect(pm.response.json().status).to.eql(\"playing\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"playing\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "End game 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"status is ended\", function () {\r\n  pm.expect(pm.response.json().status).to.eql(\"ended\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"ended\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join - game ended",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 409\", function () {",
+                  "  pm.response.to.have.status(409);",
+                  "});",
+                  "pm.test(\"error code is SESSION_ENDED\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"SESSION_ENDED\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0006"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"Late\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create - invalid input",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"error code is VALIDATION_FAILED\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"VALIDATION_FAILED\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"set_id\": \"abc\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create - no header",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 401\", function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test(\"error code is AUTH_REQUIRED\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"AUTH_REQUIRED\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"set_id\": \"1\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create - player forbidden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 403\", function () {",
+                  "  pm.response.to.have.status(403);",
+                  "});",
+                  "pm.test(\"error code is FORBIDDEN\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"FORBIDDEN\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"set_id\": 1 }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get session - bad code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"error code is VALIDATION_FAILED\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"VALIDATION_FAILED\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/12ab",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "12ab"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change status - player forbidden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 403\", function () {",
+                  "  pm.response.to.have.status(403);",
+                  "});",
+                  "pm.test(\"error code is FORBIDDEN\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"FORBIDDEN\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"ended\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change status - invalid",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"error code is VALIDATION_FAILED\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"VALIDATION_FAILED\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"BANANA\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join - no header",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 401\", function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test(\"error code is AUTH_REQUIRED\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"AUTH_REQUIRED\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"Ghost\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get session - not found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"error code is SESSION_NOT_FOUND\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"SESSION_NOT_FOUND\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/999999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join - nickname too short",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"error code is VALIDATION_FAILED\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"VALIDATION_FAILED\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0004",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"a\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - create second game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});\r\npm.collectionVariables.set(\"code2\", pm.response.json().code);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"set_id\": 1 }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - Rina joins second game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});\r\npm.test(\"new seat, rejoined is false\", function () {\r\n  pm.expect(pm.response.json().rejoined).to.eql(false);\r\n});\r\npm.collectionVariables.set(\"playerId\", pm.response.json().player_id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"Rina\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code2}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code2}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join - nickname taken",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 409\", function () {\r\n  pm.response.to.have.status(409);\r\n});\r\npm.test(\"code is NICKNAME_TAKEN\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"NICKNAME_TAKEN\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"Rina\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code2}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code2}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - start second game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"status is playing\", function () {\r\n  pm.expect(pm.response.json().status).to.eql(\"playing\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"playing\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code2}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join - game already started",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 409\", function () {",
+                  "  pm.response.to.have.status(409);",
+                  "});",
+                  "pm.test(\"error code is SESSION_NOT_JOINABLE\", function () {",
+                  "  pm.expect(pm.response.json().error.code).to.eql(\"SESSION_NOT_JOINABLE\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0006"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"Late\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code2}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code2}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - create third game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});\r\npm.collectionVariables.set(\"code3\", pm.response.json().code);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"set_id\": 1 }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join - already in a running game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "    pm.test(\"status is 409\", function () {\r\n      pm.response.to.have.status(409);\r\n    });\r\n    pm.test(\"code is ALREADY_IN_GAME\", function () {\r\n      pm.expect(pm.response.json().error.code).to.eql(\"ALREADY_IN_GAME\");\r\n    });\r\n    "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nickname\": \"Rina\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code3}}/players",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code3}}",
+                "players"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "End game 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"status is ended\", function () {\r\n  pm.expect(pm.response.json().status).to.eql(\"ended\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"ended\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code2}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "End game 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"status is ended\", function () {\r\n  pm.expect(pm.response.json().status).to.eql(\"ended\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"status\": \"ended\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/sessions/{{code3}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{code3}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Results lists the closed game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"the closed game is listed\", function () {",
+                  "  const body = pm.response.json();",
+                  "  const list = Array.isArray(body) ? body : (body.games || body.results || []);",
+                  "  const codes = list.map(function (g) { return g.session_code; });",
+                  "  pm.expect(codes).to.include(pm.collectionVariables.get(\"code2\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/results",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "results"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "question-sets",
+      "item": [
+        {
+          "name": "Create set",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});\r\npm.test(\"returns the new set\", function () {\r\n  const json = pm.response.json();\r\n  pm.expect(json).to.have.property(\"id\");\r\n  pm.expect(json.title).to.eql(\"Philippine Literature\");\r\n});\r\npm.collectionVariables.set(\"setId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Philippine Literature\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create set - extra field",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"host_id is the caller, not 99\", function () {",
+                  "  pm.expect(pm.response.json().host_id).to.not.eql(99);",
+                  "});",
+                  "pm.test(\"response has an id\", function () {",
+                  "  pm.expect(pm.response.json()).to.have.property(\"id\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Quiz One\",\"host_id\":99,\"set_id\":1}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List sets",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"returns an array\", function () {\r\n  pm.expect(pm.response.json()).to.be.an(\"array\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get set",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"id matches\", function () {\r\n  pm.expect(pm.response.json().id)\r\n    .to.eql(Number(pm.collectionVariables.get(\"setId\")));\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/{{setId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "{{setId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update set",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"title changed\", function () {\r\n  pm.expect(pm.response.json().title).to.eql(\"Philippine Literature 101\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Philippine Literature 101\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/{{setId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "{{setId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create set - invalid input",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", function () {\r\n  pm.response.to.have.status(400);\r\n});\r\npm.test(\"error code is VALIDATION_FAILED\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"VALIDATION_FAILED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"ab\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create set - title too long",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", function () {\r\n  pm.response.to.have.status(400);\r\n});\r\npm.test(\"error code is VALIDATION_FAILED\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"VALIDATION_FAILED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create set - bad JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", function () {\r\n  pm.response.to.have.status(400);\r\n});\r\npm.test(\"error code is INVALID_JSON\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"INVALID_JSON\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"title\": \"Quiz\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create set - no header",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 401\", function () {\r\n  pm.response.to.have.status(401);\r\n});\r\npm.test(\"error code is AUTH_REQUIRED\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"AUTH_REQUIRED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Quiz\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create set - player forbidden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 403\", function () {\r\n  pm.response.to.have.status(403);\r\n});\r\npm.test(\"error code is FORBIDDEN\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"FORBIDDEN\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Quiz\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get set - bad id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", function () {\r\n  pm.response.to.have.status(400);\r\n});\r\npm.test(\"error code is VALIDATION_FAILED\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"VALIDATION_FAILED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/abc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "abc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get set - not found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 404\", function () {\r\n  pm.response.to.have.status(404);\r\n});\r\npm.test(\"error code is QUESTION_SET_NOT_FOUND\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"QUESTION_SET_NOT_FOUND\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/99999",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "99999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get set - other host",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 403\", function () {\r\n  pm.response.to.have.status(403);\r\n});\r\npm.test(\"error code is FORBIDDEN\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"FORBIDDEN\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0004",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0005",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0006",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0007"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/{{setId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "{{setId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update set - other host",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 403\", function () {\r\n  pm.response.to.have.status(403);\r\n});\r\npm.test(\"error code is FORBIDDEN\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"FORBIDDEN\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0004",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0005",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0006",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0007"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Quiz\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/{{setId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "{{setId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete set - in use",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 409\", function () {\r\n  pm.response.to.have.status(409);\r\n});\r\npm.test(\"error code is QUESTION_SET_IN_USE\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"QUESTION_SET_IN_USE\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0004",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0005",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0006",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0007",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete set",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 204\", function () {\r\n  pm.response.to.have.status(204);\r\n});\r\npm.test(\"body is empty\", function () {\r\n  pm.expect(pm.response.text()).to.eql(\"\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0004",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0005",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0006",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0007",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/{{setId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "{{setId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get set - after delete",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 404\", function () {\r\n  pm.response.to.have.status(404);\r\n});\r\npm.test(\"error code is QUESTION_SET_NOT_FOUND\", function () {\r\n  pm.expect(pm.response.json().error.code).to.eql(\"QUESTION_SET_NOT_FOUND\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hub-Key",
+                "value": "dev-hub-key",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0001"
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0002",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0003",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-1001",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0004",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0005",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0006",
+                "disabled": true
+              },
+              {
+                "key": "X-Demo-User",
+                "value": "2099-0007",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/api/v1/question-sets/{{setId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "v1",
+                "question-sets",
+                "{{setId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "code",
+      "value": ""
+    },
+    {
+      "key": "playerId",
+      "value": ""
+    },
+    {
+      "key": "code2",
+      "value": ""
+    },
+    {
+      "key": "code3",
+      "value": ""
+    },
+    {
+      "key": "setId",
+      "value": ""
+    }
+  ]
+}

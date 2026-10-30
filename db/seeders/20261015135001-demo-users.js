@@ -1,6 +1,6 @@
 'use strict';
 
-const SCHOOL_IDS = ['2099-0001', '2099-0002', '2099-0003', '2099-0004', '2099-0005', '2099-0006'];
+const SCHOOL_IDS = ['2099-0001', '2099-0002', '2099-0003', '2099-0004', '2099-0005', '2099-0006', '2099-0007'];
 
 module.exports = {
   async up(queryInterface) {
@@ -12,6 +12,8 @@ module.exports = {
       { school_id: '2099-0005', username: 'bert.demo', full_name: 'Bert Demo', email: 'bert.demo@demo.test', password_hash: 'FAKE_HASH_NOT_A_REAL_PASSWORD', role: 'player' },
       // awkward case: an account that never joined any game
       { school_id: '2099-0006', username: 'idle.demo', full_name: 'Idle Demo', email: 'idle.demo@demo.test', password_hash: 'FAKE_HASH_NOT_A_REAL_PASSWORD', role: 'player' },
+            // second host: lets you test that another host gets 403
+      { school_id: '2099-0007', username: 'host2.demo', full_name: 'Second Host', email: 'host2.demo@demo.test', password_hash: 'FAKE_HASH_NOT_A_REAL_PASSWORD', role: 'host' },
     ]);
   },
 

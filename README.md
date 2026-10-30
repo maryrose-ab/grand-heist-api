@@ -20,8 +20,9 @@ This is my own build of my group's game concept. Every commit in this repository
 ## Setup
 
 ```
-git clone [repository-url]
-cd [folder-name]
+git clone https://github.com/maryrose-ab/grand-heist-api.git
+cd %USERPROFILE%\Documents
+cd grand-heist-api
 npm install
 ```
 
@@ -66,7 +67,29 @@ and at least one player joined it.
 
 ## Tables
 
-[List your tables, one line each, in the order of your migrations.]
+In the order of the migrations:
+
+| Table | Holds |
+|---|---|
+| users | Accounts. Hosts and players share it; `role` tells them apart |
+| vault_tiers | Vault tiers |
+| question_sets | A host's question set (title) |
+| questions | Questions in a set |
+| question_choices | Answer choices of a question |
+| sessions | Games, with a six-digit join code and a status |
+| players | One seat per account per game (UNIQUE `uq_one_seat`) |
+| answers | Answers given by players |
+| reward_offers | Reward offers |
+| equipment | Equipment items |
+| reward_offer_options | Options inside a reward offer |
+| beneficial_items | Equipment subtype |
+| defense_items | Equipment subtype |
+| buff_items | Equipment subtype |
+| sabotage_items | Equipment subtype |
+| special_items | Equipment subtype |
+| inventory_items | Items a player holds |
+| status_effects | Effects active on a player |
+| shop_listings | Items for sale |
 
 ## Database scripts
 
@@ -99,3 +122,30 @@ Headers: X-Demo-User (temporary, until Week 12).
 
 Joining checks, in order: session exists, rejoin (same seat), one running game at a time,
 lobby only, room left (fixed limit of 50), nickname free (database constraint).
+
+
+## Question sets (Week 11)
+
+Every endpoint is for hosts. A host sees and changes only their own sets.
+The owner is always the caller; a client cannot choose it.
+
+| Method | URL | Who may call | Success | Can fail with |
+|---|---|---|---|---|
+| GET | /api/v1/question-sets | host | 200, an array | 401, 403 |
+| POST | /api/v1/question-sets | host | 201 | 400, 401, 403 |
+| GET | /api/v1/question-sets/{id} | host (owner) | 200 | 400, 401, 403, 404 |
+| PATCH | /api/v1/question-sets/{id} | host (owner) | 200 | 400, 401, 403, 404 |
+| DELETE | /api/v1/question-sets/{id} | host (owner) | 204 | 400, 401, 403, 404, 409 |
+
+Title: 3 to 80 characters. A set used in a game cannot be deleted (409 `QUESTION_SET_IN_USE`).
+
+## Headers
+
+| Header | Who sends it | Purpose |
+|---|---|---|
+| X-Demo-User | players and hosts (temporary, until Week 12) | School ID of the caller |
+| X-Hub-Key | the Library Hub | Allows reading `/results` |
+
+## Testing
+
+`npm run db:reset`, import `postman/<your file>.json`, then Run collection. Then `npm run check`.
