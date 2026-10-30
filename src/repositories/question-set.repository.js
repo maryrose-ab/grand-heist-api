@@ -1,7 +1,26 @@
 const { QuestionSet } = require('../models');
 
-function findById(id) {
-  return QuestionSet.findByPk(id);
+function findAllByHost(hostId) {
+  return QuestionSet.findAll({
+    where: { host_id: hostId },
+    order: [['set_id', 'ASC']],
+  });
 }
 
-module.exports = { findById };
+function findById(id) {
+  return QuestionSet.findByPk(id); // a row, or null
+}
+
+function create(data) {
+  return QuestionSet.create(data);
+}
+
+function update(questionSet, changes) {
+  return questionSet.update(changes);
+}
+
+function remove(questionSet) {
+  return questionSet.destroy();
+}
+
+module.exports = { findAllByHost, findById, create, update, remove };
